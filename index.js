@@ -41,31 +41,7 @@ const convertUserCSVToJSON = (csv) => {
 	return results.data
 }
 
-// console.log(convertUserCSVToJSON(csvData))
 const customerList = convertUserCSVToJSON(csvData)
-
-// for (let i = 0; i < customerList.length; i++) {
-// 	const user = {
-// 		data: {
-// 			username: customerList[i].email,
-// 			email: customerList[i].email,
-// 			password: '',
-// 			confirmed: true,
-// 			blocked: false,
-// 			role: 'Public',
-// 			name: customerList[i].name,
-// 			street_address: customerList[i].street_address,
-// 			city: customerList[i].city,
-// 			state: customerList[i].state,
-// 			zip: customerList[i].zip,
-// 		},
-// 	}
-// 	axios.post('http://127.0.0.1:1337/users', user, {
-// 		headers: {
-// 			'Content-Type': 'application/json',
-// 		},
-// 	})
-// }
 
 let masterUserList = []
 
@@ -83,32 +59,24 @@ const addUsersToStrapiCMS = async (customerList) => {
 			city: customer.city,
 			state: customer.state,
 			zip: customer.zip,
-		}
-		// console.log('-----------')
-		// console.log(user)
+		}		
 		masterUserList.push(user)
-	})
-	console.log(masterUserList[0])
-	try {
-		axios.post(
-			'http://127.0.0.1:1337/api/auth/local/register',
-			masterUserList[0],
-			{
-				headers: {
-					'Content-Type': 'application/json',
-					Accept: '*/*',
-				},
-			}
-		)
-		// console.log('SUCCESSFULLY ADDED: ', user)
-	} catch (error) {
-		console.log('************')
-		console.log(
-			'Error inserting user into collection: ',
-			error.response.data.error.details.errors
-		)
-	}
+	})	
+
+	// for (let user of masterUserList) {
+	// 	try {
+	// 		await axios.post('http://127.0.0.1:1337/api/auth/local/register', user, {
+	// 			headers: {
+	// 				'Content-Type': 'application/json',
+	// 				'Accept': '*/*'
+	// 			}
+	// 		})
+	// 		console.log("USER ADDED: ", user)
+	// 	} catch (error) {
+	// 		console.error("STRAPI API ERROR: ", error)
+	// 	}
+	// }
+	
 }
 
 addUsersToStrapiCMS(customerList)
-// console.log('HERE: ', masterUserList[0])
